@@ -89,6 +89,6 @@ class UpgradeController(UpgradeControllerAbstract):
         self.logger.info("Exiting upgrade module...")
 
 
-ob = UpgradeController()
+# ob = UpgradeController()
 # ob.perform_upgrade()
 # # print(ob)

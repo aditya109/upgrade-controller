@@ -37,5 +37,5 @@ class GitOpsWrapper(GitOpsWrapperAbstract):
         pass
 
 
-obj = GitOpsWrapper()
-obj.check_repository_existence()
+# obj = GitOpsWrapper()
+# obj.check_repository_existence()
