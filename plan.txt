@@ -1,0 +1,27 @@
+check if repository clone exists => 
+    YES = existing repository handler
+    No = non-existing repository handler 
+
+    existing repository handler => 
+        dirty status = git get status 
+        if dirtystatus == true 
+            => dirtystatushandler
+        else => cleanstatushandler
+
+        dirtystatushandler => 
+            git reset --hard HEAD
+            matchvalue = compare_local_and_remote_commit 
+            if matchvalue == true => pass
+            else => mismatch_commit_handler
+
+            compare_local_and_remote_commit => 
+                git rev-parse master
+
+            mismatch_commit_handler =>
+                git pull
+
+        cleanstatushandler => 
+            matchvalue = compare_local_and_remote_commit 
+            if matchvalue == true => 
+                git pull
+                

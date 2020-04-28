@@ -1,41 +1,35 @@
-import os
-from services import CoreGitOpsAbstract, GitOpsWrapperAbstract
+# TODO
 import logging
+import os
+from abc import ABC, abstractmethod
 
 
-class CoreGitOps(CoreGitOpsAbstract):
+class GitOpsWrapperAbstract(ABC):
     def __init__(self):
         super().__init__()
-
-    def get_status(self):
         pass
 
-    def do_plain_clone(self):
-        pass
-
-    def do_hard_reset(self):
-        pass
-
-    def do_pull(self):
-        pass
-
-
-class GitOpsWrapper(GitOpsWrapperAbstract):
-    def __init__(self):
-        self.log = None
-        super().__init__()
-
+    @abstractmethod
     def check_repository_existence(self):
-        try :
-            path = "C:\\temp"
-            status = os.stat(path)
-            print(status)
-        except FileNotFoundError :
-            logging.INFO(f"the system cannot find the file specified: {path}")
+        pass
 
+    @abstractmethod
     def compare_local_remote_commit(self):
         pass
 
 
-# obj = GitOpsWrapper()
-# obj.check_repository_existence()
+class GitOpsWrapperImpl(GitOpsWrapperAbstract):
+    def __init__(self):
+        super().__init__()
+        pass
+
+    def check_repository_existence(self):
+        try:
+            path = "C:\\temp"
+            status = os.stat(path)
+            print(status)
+        except FileNotFoundError:
+            logging.INFO(f"the system cannot find the file specified: {path}")
+
+    def compare_local_remote_commit(self):
+        pass
