@@ -3,10 +3,10 @@ import shutil
 import unittest
 from unittest import TestCase
 
-from pkg.services.dir_manager.file_struct_creater import DirectoryPath
+from pkg.service.dir_manager.file_struct_creater import DirectoryPath
 
 
-class TestDirectoryPath(TestCase):
+class Test_Directory_Path(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.dummy_object = None
@@ -18,9 +18,6 @@ class TestDirectoryPath(TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         del cls.dummy_object
-        for path in cls.__path:
-            if os.path.exists(path):
-                shutil.rmtree(path, ignore_errors=False, onerror=None)
 
     def setUp(self) -> None:
         self.dummy_object = DirectoryPath()

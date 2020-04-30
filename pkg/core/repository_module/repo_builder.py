@@ -1,4 +1,4 @@
-from pkg.core import Repository
+from pkg.core.repository_module.repository import Repository
 
 
 # Primary Builder for Repository type Object
