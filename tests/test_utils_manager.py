@@ -27,3 +27,7 @@ class Test_Utils(TestCase):
         dummy_object.set_logger_object()
         self.assertTrue(type(dummy_object.get_logger_object()) is Logger)
         del dummy_object
+
+    def test_perform_clone(self):
+        pass
+

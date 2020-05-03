@@ -4,7 +4,7 @@ from pkg.core.logger_module.logger import LoggerL
 from pkg.core.repository_module.repo_builder import RepositoryBuilder
 from pkg.service.dir_manager.file_struct_creater import DirectoryPath
 from pkg.utils.env import env_getter
-
+from pkg.service.gitops_main.gitops_main import CoreGitOpsImpl
 
 class Dir_Module_Manager:
     """
@@ -119,3 +119,24 @@ class Repository_Module_Manager:
                 .build()
             self.logger.info("creation and configuration of `repository` object SUCCESS !")
             return repository
+
+
+class CoreGitOpsManager:
+    def __init__(self, repository):
+        self.logger = Logger_Module_Manager().get_logger_object()
+        self.repository = repository
+
+    def perform_clone(self):
+        self.logger.info("in core-git-ops-manager....")
+        o = CoreGitOpsImpl(self.logger, self.repository)
+        return o.do_plain_clone()
+
+    def perform_hard_reset(self):
+        pass
+
+    def perform_pull(self):
+        pass
+
+    def get_status(self):
+        pass
+

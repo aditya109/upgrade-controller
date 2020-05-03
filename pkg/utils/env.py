@@ -3,6 +3,8 @@ import os
 
 import yaml
 
+from controller.upgrade_ctrlr.abort_upgrade import AbortUpgradeController
+
 
 def env_getter():
     """
@@ -23,6 +25,7 @@ def env_getter():
 
     except FileNotFoundError:
         print("env.yaml is not available")
-        # TODO handler abort upgrade
+        # self.logger.critical("aborting upgrade")
+        AbortUpgradeController().abort_upgrade()
     else:
         return env_dict

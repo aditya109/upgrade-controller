@@ -1,5 +1,7 @@
-# TODO
 from abc import abstractmethod, ABC
+
+import git
+from git import GitCommandError
 
 
 class CoreGitOpsAbstract(ABC):
@@ -25,23 +27,32 @@ class CoreGitOpsAbstract(ABC):
 
 
 class CoreGitOpsImpl(CoreGitOpsAbstract):
-    def __init__(self):
+    def __init__(self, logger, repository):
         super().__init__()
+        self.logger = logger
+        self.repository = repository
 
     def get_status(self):
+        # TODO
         pass
 
     def do_plain_clone(self):
-        # git.Repo.clone_from("https://github.com/aditya109/testing124", "C://tmp//repo")
-        # repo = git.Repo("D://tmp//repo")
-        # repo.git.reset("--hard", 'origin/master')
+        self.logger.info("info core-git-ops-impl")
+        try :
+            clone_result = git.Repo.clone_from(self.repository.repository_url, self.repository.repository_path)
 
-        pass
+        except GitCommandError:
+            self.logger.critical(f"destination path {self.repository.repository_path} already exists and is not an empty directory")
+        else:
+            # returns something like this <git.repo.base.Repo 'C:\\BRSV\\tmp\\setup\\.git'> as result
+            return clone_result
 
     def do_hard_reset(self):
+        # TODO
         pass
 
     def do_pull(self):
+        # TODO
         # DIR_NAME = "D:\\tmp"
         # REMOTE_URL = "https://github.com/aditya109/Bank-Reconcilation-Statement-Validator.git"
         #
@@ -90,7 +101,4 @@ repo=git.Repo("D://tmp//repo//")
 # repo.remotes.origin.fetch()
 # repo.remotes.origin.pull(repo.remotes.origin.refs[0].remote_head)
 # print("______________DONE______________")
-
-
-
 """
