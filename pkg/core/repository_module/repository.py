@@ -52,7 +52,3 @@ class Repository:
         for f in vars(self):
             string_output = string_output + f"{f} : {vars(self)[f]}\n"
         return f"<Repository object>\n{string_output}"
-#
-# o = Repository()
-# o._repository_path = "dsaklfjdslkfjl"
-# print(o)

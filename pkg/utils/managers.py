@@ -1,6 +1,6 @@
 import os
 import requests
-from pkg.core.logger_module.logger import get_configured_logger
+from pkg.core.logger_module.logger import LoggerL
 from pkg.core.repository_module.repo_builder import RepositoryBuilder
 from pkg.service.dir_manager.file_struct_creater import DirectoryPath
 from pkg.utils.env import env_getter
@@ -38,12 +38,24 @@ class Logger_Module_Manager:
     def __init__(self):
         self.application_name = env_getter()['APPLICATION_NAME']
 
+    def set_logger_object(self):
+        """
+        Instantiates the logger object and dumps into a temp file
+        :return:
+        """
+        LoggerL().create_logger()
+
+
     def get_logger_object(self):
-        logger = get_configured_logger(self.application_name)
+        """
+        Makes static access call to get_logger() of LoggerL class
+        :return: Logger
+        """
+        logger = LoggerL().get_logger()
         logger.setLevel("INFO")
         logger.setLevel("DEBUG")
-        logger.debug(f"the log file can found out at : C:\\{self.application_name}\\logs\\{self.application_name}_log")
-        logger.info("successfully configured `logger` object")
+        logger.debug(f"log file can found out at : C:\\{self.application_name}\\logs\\{self.application_name}_log")
+        logger.info("`logger` object get operation SUCCESS !")
         return logger
 
 
@@ -68,8 +80,8 @@ class Repository_Module_Manager:
     Class create a repository object from `env.yaml`
     """
 
-    def __init__(self, logger):
-        self.logger = logger
+    def __init__(self):
+        self.logger = LoggerL().get_logger()
 
     def build_repo_envs(self):
         """
@@ -105,5 +117,5 @@ class Repository_Module_Manager:
                 .has_remote \
                 .has_remote_commit(remote_commit=remote_commit) \
                 .build()
-            self.logger.info("successfully created and configured `repository` object")
+            self.logger.info("creation and configuration of `repository` object SUCCESS !")
             return repository

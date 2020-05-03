@@ -20,18 +20,15 @@ class UpgradeController:
 
         # created the logger object of the Logger module
         logger_module_manager = Logger_Module_Manager()
+        logger_module_manager.set_logger_object()
+
         self.logger = logger_module_manager.get_logger_object()
 
-        self.logger.info("NOW using `logger` as persistent object")
-
-        repository_module_manager = Repository_Module_Manager(self.logger)
+        repository_module_manager = Repository_Module_Manager()
         repository = repository_module_manager.build_repo_envs()
 
         if repository is None:
             # TODO handle abort
+            self.logger.setLevel("CRITICAL")
             self.logger.critical("aborting upgrade")
             pass
-        self.logger.info("NOW using `repository` as persistent object")
-
-
-UpgradeController().perform_upgrade()

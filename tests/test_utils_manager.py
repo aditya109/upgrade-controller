@@ -24,5 +24,6 @@ class Test_Utils(TestCase):
     def test_get_logger_object(self):
         # check for proper functionality of get_logger_object()
         dummy_object = Logger_Module_Manager()
+        dummy_object.set_logger_object()
         self.assertTrue(type(dummy_object.get_logger_object()) is Logger)
         del dummy_object

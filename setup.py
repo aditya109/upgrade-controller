@@ -8,6 +8,7 @@ if __name__ == "__main__":
 
     # creating skeleton directory structure of the project
     dir_module_manager = Dir_Module_Manager()
+
     if dir_module_manager.create_project_directory_structure():
         # TODO abort upgrade
         pass
