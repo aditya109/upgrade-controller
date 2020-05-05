@@ -1,0 +1,13 @@
+---
+engines:
+  pylint:
+    enabled: true
+    python_version: 3.8.2
+exclude_paths:
+  - '.bundle/**'
+  - 'spec/**/*'
+  - 'benchmarks/**/*'
+  - '**.min.js'
+  - '**/tests/**' 
+  - '**/__pycache__/**'
+  - '**/upgrade_dep/**'
