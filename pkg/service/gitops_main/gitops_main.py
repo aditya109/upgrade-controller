@@ -1,8 +1,9 @@
+import os
+import shutil
 from abc import abstractmethod, ABC
 
 import git
 from git import GitCommandError
-
 
 class CoreGitOpsAbstract(ABC):
     def __init__(self):
@@ -37,41 +38,55 @@ class CoreGitOpsImpl(CoreGitOpsAbstract):
         pass
 
     def do_plain_clone(self):
-        self.logger.info("info core-git-ops-impl")
+        self.logger.info("performing operation : git clone")
         try :
-            clone_result = git.Repo.clone_from(self.repository.repository_url, self.repository.repository_path)
+            clone_state = git.Repo.clone_from(self.repository.repository_url, self.repository.repository_path)
 
         except GitCommandError:
             self.logger.critical(f"destination path {self.repository.repository_path} already exists and is not an empty directory")
         else:
             # returns something like this <git.repo.base.Repo 'C:\\BRSV\\tmp\\setup\\.git'> as result
-            return clone_result
+            return clone_state
 
     def do_hard_reset(self):
         # TODO
         pass
 
     def do_pull(self):
-        # TODO
-        # DIR_NAME = "D:\\tmp"
-        # REMOTE_URL = "https://github.com/aditya109/Bank-Reconcilation-Statement-Validator.git"
-        #
-        # os.mkdir(DIR_NAME)
-        #
-        # repo = git.Repo.init(None)
-        # origin = repo.create_remote('origin', REMOTE_URL)
-        # origin.fetch()
-        # origin.pull(origin.refs[0].remote_head)
-        # print("______________DONE______________")
-        pass
+        pull_state = None
+        self.logger.setLevel("INFO")
+        self.logger.info("performing operation : git pull")
+        DIR_NAME = self.repository.repository_path
+        REMOTE_URL = self.repository.repository_url
+        try:
+            self.logger.info(f"checking if the {DIR_NAME} exists")
+            if os.path.isdir(DIR_NAME):
+                self.logger.info(f"{DIR_NAME} exists")
+                self.logger.info("performing recursive delete on repository path")
+                os.system('rmdir /S /Q "{}"'.format(DIR_NAME))
+            self.logger.info(f"attempting directory creation: {DIR_NAME}")
+            os.mkdir(DIR_NAME)
+            self.logger.info(f"directory creation SUCCESS !")
+            self.logger.info("initiated git on repository path")
+            repo = git.Repo.init(DIR_NAME)
 
+            self.logger.info("added `origin` as remote")
+            origin = repo.create_remote('origin', REMOTE_URL)
+            self.logger.info("executing git pull origin HEAD")
+            origin.fetch()
+            pull_state = origin.pull(origin.refs[0].remote_head)
+
+        except BaseException:
+            pass
+        finally:
+            return pull_state
 
 """
 # if __name__ == "__main__":
 #     obj = CoreGitOps()
 # git.Repo.clone_from("https://github.com/aditya109/testing124", "D://tmp//repo")
 
-repo=git.Repo("D://tmp//repo//")
+# 
 # print(repo.head.commit.diff(None))
 
 # config = None
@@ -93,12 +108,5 @@ repo=git.Repo("D://tmp//repo//")
 # if repo.remotes.origin.refs.master.commit != repo.head.ref.commit :
 #     raise Exception("Master has unsynced changes ")
 # print(repo.head.commit)
-
-
-# DIR_NAME = "D:\\tmp\\repo"
-# REMOTE_URL = "https://github.com/aditya109/testing124"
-
-# repo.remotes.origin.fetch()
-# repo.remotes.origin.pull(repo.remotes.origin.refs[0].remote_head)
-# print("______________DONE______________")
 """
+

@@ -13,8 +13,7 @@ class UpgradeController:
         self.repository = None
 
     def perform_upgrade(self):
-        """
-        perform_upgrade manages calls to core-type and service-type pkg(s) and ensures
+        """perform_upgrade manages calls to core-type and service-type pkg(s) and ensures
         smooth installation of rolling upgrade
         """
 
@@ -37,4 +36,9 @@ class UpgradeController:
         clone_state = core_git_ops_manager.perform_clone()
 
         if clone_state is None:
+            AbortUpgradeController().abort_upgrade()
+        
+        pull_state = core_git_ops_manager.perform_pull()
+
+        if pull_state is None:
             AbortUpgradeController().abort_upgrade()

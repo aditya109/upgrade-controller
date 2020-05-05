@@ -63,6 +63,7 @@ local.properties
 # Visual Studio Code
 ######################
 .vscode/
+.vs/
 
 ######################
 # Maven

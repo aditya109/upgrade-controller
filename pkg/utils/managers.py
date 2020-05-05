@@ -127,7 +127,8 @@ class CoreGitOpsManager:
         self.repository = repository
 
     def perform_clone(self):
-        self.logger.info("in core-git-ops-manager....")
+        self.logger.setLevel("INFO")
+        self.logger.info("initiating operation : git clone")
         o = CoreGitOpsImpl(self.logger, self.repository)
         return o.do_plain_clone()
 
@@ -135,7 +136,10 @@ class CoreGitOpsManager:
         pass
 
     def perform_pull(self):
-        pass
+        self.logger.setLevel("INFO")
+        self.logger.info("initiating operation : git pull")
+        o = CoreGitOpsImpl(self.logger, self.repository)
+        return o.do_pull()
 
     def get_status(self):
         pass
