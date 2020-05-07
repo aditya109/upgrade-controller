@@ -132,15 +132,10 @@ class CoreGitOpsManager:
         o = CoreGitOpsImpl(self.logger, self.repository)
         return o.do_plain_clone()
 
-    def perform_hard_reset(self):
-        pass
 
     def perform_pull(self):
         self.logger.setLevel("INFO")
         self.logger.info("initiating operation : git pull")
         o = CoreGitOpsImpl(self.logger, self.repository)
         return o.do_pull()
-
-    def get_status(self):
-        pass
 

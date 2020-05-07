@@ -1,5 +1,4 @@
 import os
-import shutil
 from abc import abstractmethod, ABC
 
 import git
@@ -11,15 +10,7 @@ class CoreGitOpsAbstract(ABC):
         pass
 
     @abstractmethod
-    def get_status(self):
-        pass
-
-    @abstractmethod
     def do_plain_clone(self):
-        pass
-
-    @abstractmethod
-    def do_hard_reset(self):
         pass
 
     @abstractmethod
@@ -33,10 +24,6 @@ class CoreGitOpsImpl(CoreGitOpsAbstract):
         self.logger = logger
         self.repository = repository
 
-    def get_status(self):
-        # TODO
-        pass
-
     def do_plain_clone(self):
         self.logger.info("performing operation : git clone")
         try :
@@ -47,10 +34,6 @@ class CoreGitOpsImpl(CoreGitOpsAbstract):
         else:
             # returns something like this <git.repo.base.Repo 'C:\\BRSV\\tmp\\setup\\.git'> as result
             return clone_state
-
-    def do_hard_reset(self):
-        # TODO
-        pass
 
     def do_pull(self):
         pull_state = None
@@ -80,33 +63,3 @@ class CoreGitOpsImpl(CoreGitOpsAbstract):
             pass
         finally:
             return pull_state
-
-"""
-# if __name__ == "__main__":
-#     obj = CoreGitOps()
-# git.Repo.clone_from("https://github.com/aditya109/testing124", "D://tmp//repo")
-
-# 
-# print(repo.head.commit.diff(None))
-
-# config = None
-# commit_format = (config or {}).get("commit_format", "Release {version}")
-# if repo.head.ref != repo.heads.master :
-#     raise Exception("You need to be on `master` branch in order to do a release")
-
-# if repo.is_dirty():
-#     raise Exception("Git repository has unstaged changes.")
-
-# if len(repo.untracked_files) > 0 :
-#     raise Exception('Git repository has untracked files')
-
-# print(repo.head.commit)
-# repo.remotes.origin.fetch()
-
-# repo.remotes.origin.pull(origin.refs[0].remote_head)
-
-# if repo.remotes.origin.refs.master.commit != repo.head.ref.commit :
-#     raise Exception("Master has unsynced changes ")
-# print(repo.head.commit)
-"""
-
